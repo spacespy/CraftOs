@@ -1,0 +1,14 @@
+[Unit]
+Description=CraftOS v2 (Node.js)
+After=network-online.target avahi-daemon.service
+Wants=network-online.target
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/craftos/backend
+Environment="PORT=8000" "CRAFTOS_DB=/opt/craftos/craftos.db" "NODE_ENV=production"
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import clientsRouter from "./routes/clients.js";
+const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(cors());
+app.use(express.json());
+app.use("/api/clients", clientsRouter);
+const frontendDir = path.join(__dirname, "../frontend/dist");
+app.use(express.static(frontendDir));
+app.get("*", (_, res) => res.sendFile(path.join(frontendDir, "index.html")));
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => console.log(`🌿 CraftOS v2 running on :${PORT}`));
